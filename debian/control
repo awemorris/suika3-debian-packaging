@@ -1,5 +1,5 @@
 Source: suika3
-Section: games
+Section: interpreters
 Priority: optional
 Maintainer: Awe Morris <awe@noctvm.io>
 Build-Depends: debhelper-compat (= 13),
