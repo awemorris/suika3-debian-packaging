@@ -12,6 +12,7 @@ include /usr/share/dpkg/default.mk
 override_dh_auto_configure:
 	dh_auto_configure -- \
 		-DSUIKA_ENABLE_DIST=ON \
+		-DSUIKA_ENABLE_INSTALL=ON \
 		-DSUIKA_ENABLE_JIT=ON \
 		-DSUIKA_ENABLE_I18N=ON \
 		-DSUIKA_ENABLE_PACK=ON \
