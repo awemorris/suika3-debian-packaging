@@ -1,5 +1,5 @@
-suika3 (26.04.6-1) unstable; urgency=medium
+suika3 (26.04.6-3) unstable; urgency=medium
 
-  * Sync upstream
+  * Initial release (Closes: #1133308)
 
  -- Awe Morris <awe@noctvm.io>  Fri, 10 Apr 2026 05:24:58 +0900
