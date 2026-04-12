@@ -1,5 +1,16 @@
 #!/usr/bin/make -f
 
+#
+# [CMake Configuration Override]
+#  - SUIKA_ENABLE_DIST=ON     ... For OS packager. Use system shared lirbaries.
+#  - SUIKA_ENABLE_JIT=ON      ... Use JIT compiler.
+#  - SUIKA_ENABLE_I18N=ON     ... Use i18n translations. (via internal mechanism)
+#  - SUIKA_ENABLE_PACK=ON     ... Build the suika3-pack archiver.
+#  - SUIKA_ENABLE_BYTECOMP=ON ... Build the suika3-bcc bytecode compiler.
+#  - SUIKA_ENABLE_AOTCOMP=ON  ... Build the suika3-aotc AOT compiler.
+#  - SUIKA_DIR_DOCS           ... Path to the Markdown documents.
+#  - SUIKA_DIR_GAME           ... Path to the psample game.
+#
 override_dh_auto_configure:
 	dh_auto_configure -- \
 		-DSUIKA_ENABLE_DIST=ON \
@@ -12,21 +23,27 @@ override_dh_auto_configure:
 		-DSUIKA_DIR_GAME="share/doc/suika3/examples"
 
 #
-# Remove the bundled font in the sample game, and use a packaged system
-# font instead.  The bundled font has a separate license (not ZLIB),
-# and the packaging system should not install bundled fonts when
-# system-packaged ones are available.
-#
-# Create a symlink to NotoSans to satisfy the engine's expected file name
-# without modifying upstream sample data.
-#
-# In addition, remove the unused bgm2 directory because it is just a bonus
-# track.
+# [Installation Override]
+#  - Remove the bundled font in the sample game, and use a packaged system
+#    font instead.
+#  - The bundled font has a separate license (not ZLIB), and the packaging
+#    system should not install bundled fonts when system-packaged ones are
+#    available.
+#  - Create a symlink to NotoSans to satisfy the engine's expected file name
+#    without modifying upstream sample data.
+#  - In addition, remove the unused bgm2 directory because it is just a bonus
+#    track.
 #
 override_dh_auto_install:
 	dh_auto_install
+
+	# Remove unused material.
 	rm -rf debian/suika3/usr/share/doc/suika3/examples/game/bgm2
+
+	# Remove bundled fonts.
 	mkdir -p debian/suika3/usr/share/doc/suika3/examples/game/system/font
+
+	# Make a symlink to a system font.
 	ln -sf /usr/share/fonts/truetype/noto/NotoSans-Regular.ttf \
 		debian/suika3/usr/share/doc/suika3/examples/game/system/font/rounded-l-mplus-1c-bold.ttf
 
