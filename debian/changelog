@@ -1,5 +1,5 @@
-suika3 (26.04.9-1) unstable; urgency=medium
+suika3 (26.04.9-2) unstable; urgency=medium
 
   * Initial release (Closes: #1133308)
 
- -- Awe Morris <awe@noctvm.io>  Tue, 14 Apr 2026 10:32:45 +0900
+ -- Awe Morris <awe@noctvm.io>  Tue, 16 Apr 2026 17:01:05 +0900

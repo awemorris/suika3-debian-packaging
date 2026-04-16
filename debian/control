@@ -23,7 +23,7 @@ Build-Depends: debhelper-compat (= 13),
 Standards-Version: 4.7.3
 Homepage: https://github.com/awemorris/suika3
 Vcs-Browser: https://github.com/awemorris/suika3
-Vcs-Git: https://github.com/awemorris/suika3.git
+Vcs-Git: https://salsa.debian.org/awemorris/suika3
 
 Package: suika3
 Architecture: any
