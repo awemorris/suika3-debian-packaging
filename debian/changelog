@@ -1,3 +1,10 @@
+suika3 (26.04.13-1) UNRELEASED; urgency=medium
+
+  * Update rules
+  * New upstream version 26.04.13
+
+ -- Awe Morris <awe@noctvm.io>  Thu, 23 Apr 2026 03:44:25 +0900
+
 suika3 (26.04.9-3) unstable; urgency=medium
 
   * Initial release (Closes: #1133308)
