@@ -7,6 +7,10 @@ Files: *
 Copyright: 2026 Awe Morris / SCHOLA SUIKAE
 License: Zlib
 
+Files: resources/flatpak/vn.suika3.engine.metainfo.xml
+Copyright: 2026 Awe Morris / SCHOLA SUIKAE
+License: CC0-1.0
+
 License: Zlib
  This software is provided 'as-is', without any express or implied
  warranty. In no event will the authors be held liable for any damages
