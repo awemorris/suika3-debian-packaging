@@ -1,57 +1,68 @@
-ID:File %s: Line %d: %s
-es:Archivo %s: Línea %d: %s
-fr:Fichier %s: Ligne %d: %s
-it:File %s: Linea %d: %s
-de:Datei %s: Zeile %d: %s
-el:Αρχείο %s: Γραμμή %d: %s
-ru:Файл %s: Строка %d: %s
-zh:文件 %s: 第 %d 行: %s
-tw:檔案 %s: 第 %d 行: %s
-ja:ファイル %s: %d 行目: %s
+ID:%s:%d: %s
+es:%s:%d: %s
+fr:%s:%d : %s
+it:%s:%d: %s
+de:%s:%d: %s
+el:%s:%d: %s
+ru:%s:%d: %s
+zh:%s:%d: %s
+tw:%s:%d: %s
+ja:%s:%d: %s
 ---
-ID:File %s: Line %d: Tag %s: 
-es:Archivo %s: Línea %d: Etiqueta %s: 
-fr:Fichier %s: Ligne %d: Balise %s: 
-it:File %s: Linea %d: Tag %s: 
-de:Datei %s: Zeile %d: Tag %s: 
-el:Αρχείο %s: Γραμμή %d: Ετικέτα %s: 
-ru:Файл %s: Строка %d: Тег %s: 
-zh:文件 %s: 第 %d 行: 标签 %s: 
-tw:檔案 %s: 第 %d 行: 標籤 %s: 
-ja:ファイル %s: %d 行目: タグ %s: 
+ID:Error: %s:%d: %s
+es:Error: %s:%d: %s
+fr:Erreur : %s:%d : %s
+it:Errore: %s:%d: %s
+de:Fehler: %s:%d: %s
+el:Σφάλμα: %s:%d: %s
+ru:Ошибка: %s:%d: %s
+zh:错误: %s:%d: %s
+tw:錯誤: %s:%d: %s
+ja:エラー: %s:%d: %s
 ---
-ID:File %s: Line %d: Runtime error.
-es:Archivo %s: Línea %d: Error de ejecución.
-fr:Fichier %s: Ligne %d: Erreur d'exécution.
-it:File %s: Linea %d: Erreur d'esecuzione.
-de:Datei %s: Zeile %d: Laufzeitfehler.
-el:Αρχείο %s: Γραμμή %d: Σφάλμα κατά την εκτέλεση.
-ru:Файл %s: Строка %d: Ошибка времени выполнения.
-zh:文件 %s: 第 %d 行: 运行时错误。
-tw:檔案 %s: 第 %d 行: 執行階段錯誤。
-ja:ファイル %s: %d 行目: 実行時エラー。
+ID:Error: %s:%d: Tag %s: 
+es:Error: %s:%d: Tag %s: 
+fr:Erreur : %s:%d : Tag %s: 
+it:Errore: %s:%d: Tag %s: 
+de:Fehler: %s:%d: Tag %s: 
+el:Σφάλμα: %s:%d: Tag %s: 
+ru:Ошибка: %s:%d: Tag %s: 
+zh:错误: %s:%d: Tag %s: 
+tw:錯誤: %s:%d: Tag %s: 
+ja:エラー: %s:%d: Tag %s: 
 ---
-ID:%s:%d: Tag "%s" not found.
-es:%s:%d: No se encontró la etiqueta "%s".
-fr:%s:%d : Balise "%s" introuvable.
-it:%s:%d: Tag "%s" non trovato.
-de:%s:%d: Tag "%s" wurde nicht gefunden.
-el:%s:%d: Η ετικέτα "%s" δεν βρέθηκε.
-ru:%s:%d: Тег "%s" не найден.
-zh:%s:%d: 未找到标签 "%s"。
-tw:%s:%d: 找不到標籤 "%s"。
-ja:%s:%d: タグ "%s" がみつかりません。
+ID:Error: %s:%d: Runtime error
+es:Error: %s:%d: Error de ejecución
+fr:Erreur : %s:%d: Erreur d'exécution
+it:Errore: %s:%d: Erreur d'esecuzione
+de:Fehler: %s:%d: Laufzeitfehler
+el:Σφάλμα: %s:%d: Σφάλμα κατά την εκτέλεση
+ru:Ошибка: %s:%d: Ошибка времени выполнения
+zh:错误: %s:%d: 运行时错误
+tw:錯誤: %s:%d: 執行階段錯誤
+ja:エラー: %s:%d: 実行時エラー
 ---
-ID:%s:%d: "Tag_%s" is not a function.
-es:%s:%d: "Tag_%s" no es una función.
-fr:%s:%d : "Tag_%s" n'est pas une fonction.
-it:%s:%d: "Tag_%s" non è una funzione.
-de:%s:%d: "Tag_%s" ist keine Funktion.
-el:%s:%d: Το "Tag_%s" δεν είναι συνάρτηση.
-ru:%s:%d: «Tag_%s» не является функцией.
-zh:%s:%d: "Tag_%s" 不是函数。
-tw:%s:%d: "Tag_%s" 不是函式。
-ja:%s:%d: "Tag_%s" は関数ではありません。
+ID:Error: %s:%d: Tag "%s" not found.
+es:Error: %s:%d: No se encontró la etiqueta "%s".
+fr:Erreur : %s:%d : Balise "%s" introuvable.
+it:Errore: %s:%d: Tag "%s" non trovato.
+de:Fehler: %s:%d: Tag "%s" wurde nicht gefunden.
+el:Σφάλμα: %s:%d: Η ετικέτα "%s" δεν βρέθηκε.
+ru:Ошибка: %s:%d: Тег "%s" не найден.
+zh:错误: %s:%d: 未找到标签 "%s"。
+tw:錯誤: %s:%d: 找不到標籤 "%s"。
+ja:エラー: %s:%d: タグ "%s" がみつかりません。
+---
+ID:Error: %s:%d: "Tag_%s" is not a function.
+es:Error: %s:%d: "Tag_%s" no es una función.
+fr:Erreur : %s:%d : "Tag_%s" n'est pas une fonction.
+it:Errore: %s:%d: "Tag_%s" non è una funzione.
+de:Fehler: %s:%d: "Tag_%s" ist keine Funktion.
+el:Σφάλμα: %s:%d: Το "Tag_%s" δεν είναι συνάρτηση.
+ru:Ошибка: %s:%d: «Tag_%s» не является функцией.
+zh:错误: %s:%d: "Tag_%s" 不是函数。
+tw:錯誤: %s:%d: "Tag_%s" 不是函式。
+ja:エラー: %s:%d: "Tag_%s" は関数ではありません。
 ---
 ID:Argument "%s" not specified.
 es:No se ha especificado el argumento "%s".
@@ -657,4 +668,14 @@ ru:Недопустимая строка конфигурации в файле 
 zh:文件 "%s" 第 %d 行配置无效。
 tw:檔案 "%s" 第 %d 行設定無効。
 ja:ファイル "%s" の %d 行目の設定が不正です。
+---
+ID:No matching localized text.
+es:No se encontro un texto localizado coincidente.
+fr:Aucun texte localisé correspondant n'a été trouvé.
+it:Nessun testo localizzato corrispondente trovato.
+de:Kein passender lokalisierter Text gefunden.
+el:Δεν βρέθηκε αντίστοιχο τοπικό κείμενο.
+ru:Соответствующий локализованный текст не найден.
+zh:未找到匹配的本地化文本。
+ja:テキストのローカライズ版がマッチしませんでした。
 ---

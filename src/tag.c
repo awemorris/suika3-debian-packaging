@@ -174,7 +174,7 @@ s3_move_to_tag_file(const char *file)
 
 	/* Parse the file content. */
 	if (!parse_tag_document(buf, parse_tag_callback, &error_message, &error_line)) {
-		s3_log_error(S3_TR("File %s: Line %d: %s"),  file, error_line, error_message);
+		s3_log_error(S3_TR("Error: %s:%d: %s"),  file, error_line, error_message);
 		free(buf);
 		return false;
 	}
@@ -911,6 +911,10 @@ parse_tag_document(
 	char *prop_name_tbl[PROP_MAX];
 	char *prop_val_tbl[PROP_MAX];
 	int i;
+	bool first_value;
+	bool multiline;
+	bool line_top;
+	bool last_is_escape;
 
 	for (i = 0; i < PROP_MAX; i++) {
 		prop_name_tbl[i] = &prop_name[i][0];
@@ -922,6 +926,9 @@ parse_tag_document(
 	line = 1;
 	len = 0;
 	prop_count = 0;
+	first_value = false;
+	multiline = false;
+	line_top = false;
 	while (*top != '\0') {
 		c = *top++;
 		switch (state) {
@@ -1031,6 +1038,19 @@ parse_tag_document(
 			if (c == '\"') {
 				state = ST_PROPVALUE_BODY;
 				len = 0;
+				if (*top != '\0' && *(top + 1) != '\0' &&
+				    *top == '\"' && *(top + 1) == '\"') {
+					top += 2;
+					first_value = true;
+					multiline = true;
+					line_top = true;
+					last_is_escape = false;
+				} else {
+					first_value = false;
+					multiline = false;
+					line_top = false;
+					last_is_escape = false;
+				}
 				continue;
 			}
 			continue;
@@ -1041,25 +1061,104 @@ parse_tag_document(
 					prop_val[prop_count][len] = '\"';
 					len++;
 					top++;
+					first_value = false;
+					line_top = false;
+					last_is_escape = false;
 					continue;
 				case 'n':
 					prop_val[prop_count][len] = '\n';
 					len++;
 					top++;
+					first_value = false;
+					line_top = false;
+					last_is_escape = false;
 					continue;
 				case '\\':
 					prop_val[prop_count][len] = '\\';
 					len++;
 					top++;
+					first_value = false;
+					line_top = false;
+					last_is_escape = false;
+					continue;
+				case 's':
+					prop_val[prop_count][len] = ' ';
+					len++;
+					top++;
+					first_value = false;
+					line_top = false;
+					last_is_escape = false;
+					continue;
+				case '\n':
+					/* Escape for LF: Ignore \\LF */
+					top++;
+					first_value = false;
+					line_top = true;
+					last_is_escape = true;
 					continue;
 				default:
 					prop_val[prop_count][len] = '\\';
 					len++;
+					first_value = false;
+					line_top = false;
+					last_is_escape = false;
 					continue;
 				}
 			}
+			if (c == '\n') {
+				/* Truncate the first byte LF. """\n */
+				if (multiline && first_value) {
+					first_value = false;
+					line_top = true;
+					last_is_escape = false;
+					continue;
+				}
+
+				/* Escape LF \\\n */
+				if (multiline && last_is_escape) {
+					first_value = false;
+					line_top = true;
+					last_is_escape = false;
+					continue;
+				}
+
+				prop_val[prop_count][len] = '\n';
+				len++;
+				first_value = false;
+				line_top = true;
+				last_is_escape = false;
+				continue;
+			}
+			if ((c == ' ' || c == '\t') && multiline && line_top) {
+				/* Ignore line top spaces. */
+				first_value = false;
+				line_top = true;
+				last_is_escape = false;
+				continue;
+			}
 			if (c == '\"') {
-				prop_val[prop_count][len] = '\0';
+				if (multiline) {
+					if (*top != '\0' && *(top + 1) != '\0' &&
+					    *top == '\"' && *(top + 1) == '\"') {
+						/* EOF */
+						top += 2;
+					} else {
+						/* Normal " */
+						prop_val[prop_count][len++] = c;
+						first_value = false;
+						line_top = false;
+						last_is_escape = false;
+						continue;
+					}
+				}
+
+				if (multiline && len > 0 && prop_val[prop_count][len - 1] == '\n') {
+					/* Truncate the last LF if multi-line. */
+					prop_val[prop_count][len - 1] = '\0';
+				} else {
+					/* Otherwise just terminate. */
+					prop_val[prop_count][len] = '\0';
+				}
 				prop_count++;
 
 				state = ST_PROPNAME;
@@ -1071,7 +1170,11 @@ parse_tag_document(
 				*error_line = line;
 				return false;
 			}
-			prop_val[prop_count][len++] = c;
+			prop_val[prop_count][len] = c;
+			len++;
+			first_value = false;
+			line_top = false;
+			last_is_escape = false;
 			continue;
 		case ST_COMMENT:
 			if (c == '\n') {

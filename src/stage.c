@@ -393,6 +393,7 @@ s3i_setup_msgbox(void)
 	/* Layout the message box layer. */
 	layer_x[S3_LAYER_MSGBOX] = conf_msgbox_x;
 	layer_y[S3_LAYER_MSGBOX] = conf_msgbox_y;
+	layer_alpha[S3_LAYER_MSGBOX] = 0;
 
 	/* Transfer the message box image to the message box layer. */
 	s3_fill_msgbox();
@@ -454,11 +455,13 @@ s3i_setup_choose(bool is_hover, int index)
 	/* Destroy when reinitialized. */
 	for (i = 0; i < S3_CHOOSEBOX_COUNT; i ++) {
 		if (index == -1 || i == index) {
-			if (choose_idle_image[i] != NULL) {
+			if (choose_idle_image[i] != NULL &&
+			    (!is_hover || index == -1)) {
 				s3_destroy_image(choose_idle_image[i]);
 				choose_idle_image[i] = NULL;
 			}
-			if (choose_hover_image[i] != NULL) {
+			if (choose_hover_image[i] != NULL &&
+			    (is_hover || index == -1)) {
 				s3_destroy_image(choose_hover_image[i]);
 				choose_hover_image[i] = NULL;
 			}
@@ -849,13 +852,6 @@ s3_set_layer_position(
 
 	layer_x[layer] = x;
 	layer_y[layer] = y;
-
-	switch (layer) {
-	case S3_LAYER_CLICK: return;
-	case S3_LAYER_AUTO: return;
-	case S3_LAYER_SKIP: return;
-	default: break;
-	}
 }
 
 /*
@@ -1128,7 +1124,10 @@ s3_set_layer_image(
 	assert(layer != S3_LAYER_AUTO);
 	assert(layer != S3_LAYER_SKIP);
 
-	destroy_layer(layer);
+	if (layer_image[layer] != NULL) {
+		s3_destroy_image(layer_image[layer]);
+		layer_image[layer] = NULL;
+	}
 
 	layer_image[layer] = img;
 }
@@ -2968,8 +2967,47 @@ void
 s3_show_namebox(
 	bool show)
 {
+	const char *file;
+	int i;
+
+	/* Decide an anime to run. */
+	file = NULL;
+	if (!is_namebox_visible && show)
+		file = conf_namebox_anime_show;
+	else if (is_namebox_visible && !show)
+		file = conf_namebox_anime_hide;
+
+	/* Set the flag. */
 	is_namebox_visible = show;
-	layer_alpha[S3_LAYER_NAMEBOX] = show? 255 : 0;
+
+	/* Run an anime. */
+	if (file != NULL) {
+		/* Stop the anime. */
+		s3_clear_layer_anime_sequence(S3_LAYER_NAMEBOX);
+
+		/* Reset the position. */
+		s3_set_layer_position(S3_LAYER_NAMEBOX, conf_namebox_x, conf_namebox_y);
+		s3_set_layer_scale(S3_LAYER_NAMEBOX, 1.0f, 1.0f);
+		s3_set_layer_center(S3_LAYER_NAMEBOX, 0, 0);
+		s3_set_layer_rotate(S3_LAYER_NAMEBOX, 0);
+
+		/* Set the argument. ($0 = "namebox") */
+		s3_set_call_argument(0, "namebox");
+		for (i = 1; i < S3_CALL_ARGS; i++)
+			s3_set_call_argument(i, NULL);
+
+		/* Start the anime. */
+		s3_load_anime_from_file(file, NULL, NULL);
+	}
+}
+
+/*
+ * Chech if the name box is visible.
+ */
+bool
+s3_is_namebox_visible(void)
+{
+	return is_msgbox_visible;
 }
 
 /*
@@ -3036,6 +3074,15 @@ s3_show_msgbox(
 		/* Start the anime. */
 		s3_load_anime_from_file(file, NULL, NULL);
 	}
+}
+
+/*
+ * Chech if the message box is visible.
+ */
+bool
+s3_is_msgbox_visible(void)
+{
+	return is_msgbox_visible;
 }
 
 /*

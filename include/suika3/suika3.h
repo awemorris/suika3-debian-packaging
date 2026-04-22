@@ -378,7 +378,7 @@
  * Message Translation
  */
 #if !defined(S3_TR)
-#if defined(USE_TRANSLATION)
+#if defined(S3_USE_TRANSLATION)
 #define S3_TR(s)	s3_gettext(s)
 const char *s3_gettext(const char *msg);
 #else
@@ -852,25 +852,6 @@ bool
 s3_is_page_mode(void);
 
 /*
- * Append a string to the page mode buffer string.
- */
-bool
-s3_append_buffered_message(
-	const char *msg);
-
-/*
- * Get the page mode buffer string.
- */
-const char *
-s3_get_buffered_message(void);
-
-/*
- * Clear the page mode buffer string.
- */
-void
-s3_clear_buffered_message(void);
-
-/*
  * Reset the message line count in a page.
  */
 void
@@ -935,6 +916,13 @@ s3_set_last_message(
 	const char *msg);
 
 /*
+ * Append to the last message.
+ */
+bool
+s3_append_last_message(
+	const char *msg);
+
+/*
  * Get the last message.
  */
 const char *
@@ -945,6 +933,20 @@ s3_get_last_message(void);
  */
 const char *
 s3_get_prev_last_message(void);
+
+/*
+ * Set the last speaker name.
+ */
+bool
+s3_set_last_name(
+	const char *name);
+
+/*
+ * Get the last speaker name.
+ */
+const char *
+s3_get_last_name(
+	void);
 
 /*
  * Set the text speed.
@@ -1544,6 +1546,12 @@ s3_show_namebox(
 	bool show);
 
 /*
+ * Chech if the name box is visible.
+ */
+bool
+s3_is_namebox_visible(void);
+
+/*
  * Fill the message box by the message box image.
  */
 void
@@ -1555,6 +1563,12 @@ s3_fill_msgbox(void);
 void
 s3_show_msgbox(
 	bool show);
+
+/*
+ * Chech if the message box is visible.
+ */
+bool
+s3_is_msgbox_visible(void);
 
 /*
  * Get the message box position and size.
@@ -2533,6 +2547,14 @@ s3_add_history(
 	s3_pixel_t body_outline_color,
 	s3_pixel_t name_color,
 	s3_pixel_t name_outline_color);
+
+/*
+ * Append to the last history.
+ */
+bool
+s3_append_history(
+	const char *text,
+	const char *spacing);
 
 /*
  * Get the number of the history.

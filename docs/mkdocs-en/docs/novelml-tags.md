@@ -6,8 +6,8 @@ Suika3 Tag Reference
 | Tag Name                    | Description                                                        |
 |-----------------------------|--------------------------------------------------------------------|
 | [anime](#anime)             | Loads and runs an animation file.                                  |
-| [bg](bg)                    | Changes the background image with a fading effect.                 |
-| [bgm](bgm)                  | Plays a background music file (Ogg Vorbis format).                 |
+| [bg](#bg)                   | Changes the background image with a fading effect.                 |
+| [bgm](#bgm)                 | Plays a background music file (Ogg Vorbis format).                 |
 | [callmacro](#callmacro)     | Calls a defined macro.                                             |
 | [ch](#ch)                   | Shows or hides characters with detailed layer parameters.          |
 | [chapter](#chapter)         | Sets a chapter name.                                               |
@@ -474,15 +474,22 @@ In Suika3, **all variables are treated as text strings**, but they can be compar
 
 # Clear a variable by setting it to an empty string
 [set name="flag_event_01" value=""]
+
+# Add 1 to var1.
+[set name="var1" value1="${var1}" op="+" value2="1"]
+
 ```
 
 ### Arguments
 
-| Argument | Omissible     | Description                              | Notes                                                               |
-|----------|---------------|------------------------------------------|---------------------------------------------------------------------|
-| `name`   | No            | The unique name of the variable.         | Use alphanumeric characters and underscores for best compatibility. |
-| `value`  | No            | The content to store in the variable.    | Remember: everything is stored as a string!                         |
-| `global` | Yes (`false`) | Make the flag global.                    | Global variables are for achievement flags e.g., "Saw ED1".         |
+| Argument | Omissible     | Description                                 | Notes                                                               |
+|----------|---------------|---------------------------------------------|---------------------------------------------------------------------|
+| `name`   | No            | The unique name of the variable.            | Use alphanumeric characters and underscores for best compatibility. |
+| `value`  | Yes           | The content to store in the variable.       | Remember: everything is stored as a string!                         |
+| `value1` | Yes           | The operand 1 for opcode.                   |                                                                     |
+| `value2` | Yes           | The operand 2 for opcode.                   |                                                                     |
+| `op`     | Yes           | The opcode. (`+`, `-`, `*`, `/`, `//`, `%`) |                                                                     |
+| `global` | Yes (`false`) | Make the flag global.                       | Global variables are for achievement flags e.g., "Saw ED1".         |
 
 ### Tips
 
@@ -723,12 +730,14 @@ It can show the main dialogue or narration, and optionally display a character's
 | `text`           | No        | The message content to be displayed.             |                                                  |
 | `text-<locale>`  | Yes       | The message content to be displayed. (localized) |                                                  |
 | `voice`          | Yes       | The voice file.                                  |                                                  |
-| `voice-<locale>` | Yes       | The voice file. (localized)                                  |                                      |
+| `voice-<locale>` | Yes       | The voice file. (localized)                      |                                                  |
 | `name`           | Yes       | The character's name to display in the name box. | If omitted, the name box will usually be hidden. |
+| `action`         | Yes       | For NVL mode and manual show/hide.               |                                                  |
+| `space`          | Yes       | For NVL mode.                                    |                                                  |
 
 ### Localization
 
-For example, if the user OS environment is set to Japanese, `text1-ja` is preferred instead of `text1`.
+For example, if the user OS environment is set to Japanese, `text-ja` is preferred instead of `text`.
 
 | Suffix      | Language                                 |
 |-------------|------------------------------------------|
@@ -759,8 +768,8 @@ preferred. The same mechanism is applied to Spanish and French. Note
 that there is no fallback from Traditional Chinese to Simplified
 Chinese.
 
-For example, if the user locale is `en-AU`, the following priority is applied:
-* 1. text-en-au
+For example, if the user locale is `en-GB`, the following priority is applied:
+* 1. text-en-gb
 * 2. text-en
 * 3. text
 
@@ -782,6 +791,111 @@ The following are currently not supported but planned to be supported.
 | -si         | Sinhala                                  |
 | -ar         | Arabic (RTL)                             |
 | -fa         | Persian (RTL)                            |
+
+### Actions
+
+You can use special parameters in the `text` tag.
+
+```
+# Clear the message box.
+[text action="clear"]
+
+# Clear the message box and show it.
+[text action="new"]
+
+# Show the message box.
+[text action="show"]
+
+# Hide the message box.
+[text action="hide"]
+```
+
+### NVL Mode
+
+You can enter the NVL mode by setting some config.
+
+```
+[text action="hide"]
+[wait time="0.3"] # Wait for the message box to hide.
+[config name="game.novel" value="true"]
+[config name="msgbox.image" value="system/message/msgbox-nvl.png"]
+[config name="msgbox.x" value="0"]
+[config name="msgbox.y" value="0"]
+[config name="msgbox.margin.line" value="60"]
+[config name="namebox.enable" value="false"]
+[config name="choose.box1.idle" value="system/choose/nvl.png"]
+[config name="choose.box1.hover" value="system/choose/nvl.png"]
+[config name="choose.box1.idle_anime" value="system/choose/idle-nvl.anime"]
+[config name="choose.box1.hover_anime" value="system/choose/hover-nvl.anime"]
+[config name="choose.box2.idle" value="system/choose/nvl.png"]
+[config name="choose.box2.hover" value="system/choose/nvl.png"]
+[config name="choose.box2.idle_anime" value="system/choose/idle-nvl.anime"]
+[config name="choose.box2.hover_anime" value="system/choose/hover-nvl.anime"]
+[config name="choose.box3.idle" value="system/choose/nvl.png"]
+[config name="choose.box3.hover" value="system/choose/nvl.png"]
+[config name="choose.box3.idle_anime" value="system/choose/idle-nvl.anime"]
+[config name="choose.box3.hover_anime" value="system/choose/hover-nvl.anime"]
+[config name="click.move" value="true"]
+[text action="clear"]
+```
+
+You can go back to ADV mode by resetting the config.
+
+```
+[text action="hide"]
+[wait time="0.3"] # Wait for the message box to hide.
+[config name="game.novel" value="false"]
+[config name="msgbox.image" value="system/message/msgbox.png"]
+[config name="msgbox.x" value="0"]
+[config name="msgbox.y" value="520"]
+[config name="msgbox.margin.line" value="40"]
+[config name="namebox.enable" value="true"]
+[config name="choose.box1.idle" value="system/choose/idle.png"]
+[config name="choose.box1.hover" value="system/choose/hover.png"]
+[config name="choose.box1.idle_anime" value="system/choose/idle.anime"]
+[config name="choose.box1.hover_anime" value="system/choose/hover.anime"]
+[config name="choose.box2.idle" value="system/choose/idle.png"]
+[config name="choose.box2.hover" value="system/choose/hover.png"]
+[config name="choose.box2.idle_anime" value="system/choose/idle.anime"]
+[config name="choose.box2.hover_anime" value="system/choose/hover.anime"]
+[config name="choose.box3.idle" value="system/choose/idle.png"]
+[config name="choose.box3.hover" value="system/choose/hover.png"]
+[config name="choose.box3.idle_anime" value="system/choose/idle.anime"]
+[config name="choose.box3.hover_anime" value="system/choose/hover.anime"]
+[config name="click.move" value="false"]
+```
+
+In NVM mode, you can control text messages like this:
+
+```
+# New page.
+[text action="clear"]
+[text text="Hello, this is NVL mode test."]
+[text text="NVL mode has a fullscreen-styled message box."]
+[text text="By default, each text tag will do a line feed."]
+[text text="To continue a paragraph,"]
+[text text="specify the space parameter." space=" "]
+
+# New page.
+[text action="clear"]
+[text text="Please clear the message box explicitly."]
+```
+
+### Voice
+
+If the current language is `en-us`, a voice file will resolved in the following order:
+
+1. `voice-en-us` parameter
+2. `voice/en-us/` + `voice` parameter
+3. `voice-en` parameter
+4. `voice/en/` + `voice` parameter
+5. `voice` parameter
+
+If the current language is `ja`, a voice file will resolved in the following order:
+
+1. `voice-ja` parameter
+2. `voice/ja/` + `voice` parameter
+3. `voice` parameter
 
 ### Tips
 
@@ -1523,9 +1637,9 @@ It is ideal for opening cinematics, transitional cutscenes, or high-impact visua
 
 ```
 # Play an opening movie (cannot be skipped)
-[video file="opening.mp4" skippable="false"]
+[video file="opening.mp4"]
 
-# Play a short cutscene that the player can skip with a click if not the first time
+# Play a short cutscene that the player can skip with a click.
 [video file="cutscene01.mp4" skippable="true"]
 ```
 

@@ -31,6 +31,7 @@
 #include "conf.h"
 #include "mixer.h"
 #include "stage.h"
+#include "save.h"
 
 #include <playfield/playfield.h>
 
@@ -552,7 +553,7 @@ static struct rule {
 	/* Game Info */
 	{'s',	"game.title.en",		&conf_game_title_en,			MUST,		NOSAVE,	GLOBAL},
 	{'s',	"game.title.ja",		&conf_game_title_ja,			MUST,		NOSAVE,	GLOBAL},
-	{'b',	"game.novel",			&conf_game_novel,			MUST,		SAVE,	GLOBAL},
+	{'b',	"game.novel",			&conf_game_novel,			MUST,		SAVE,	LOCAL},
 	{'s',	"game.locale",			&conf_game_locale,			OPTIONAL,	SAVE,	GLOBAL},
 
 	/* Font */
@@ -1445,11 +1446,27 @@ s3_set_config(
 	if (rule_tbl[i].var_ptr == NULL)
 		return true;
 
+	/* Hook for ADV/NVL switching. */
+	if (!s3i_is_load_in_progress() &&
+	    strcmp(key, "game.novel") == 0 &&
+	    !conf_game_novel &&
+	    (strcmp(val, "true") == 0 ||
+	     strcmp(val, "yes") == 0 ||
+	     strcmp(val, "1") == 0)) {
+		/* Flush the prev_last_message. */
+		s3_set_last_message("");
+		s3_set_last_message("");
+	}
+
 	/* Assign by the type. */
 	switch (rule_tbl[i].type) {
 	case 'b':
 		/* var_ptr is a pointer to a bool var. */
-		*(bool *)rule_tbl[i].var_ptr = (strcmp(val, "yes") == 0 || strcmp(val, "1") == 0) ? true : false;
+		*(bool *)rule_tbl[i].var_ptr = 
+			(strcmp(val, "yes") == 0 ||
+			 strcmp(val, "true") == 0 ||
+			 strcmp(val, "1") == 0) ?
+			true : false;
 		break;
 	case 'i':
 		/* var_ptr is a pointer to an int var. */
@@ -1483,46 +1500,46 @@ s3_set_config(
 		break;
 	}
 
-	/* Update the layer (x, y) positions by config keys. */
-	s3_reload_stage_positions();
-
 	/* Postprocess for image load. */
 	if (strcmp(key, "msgbox.image") == 0)
 		s3i_setup_msgbox();
 	else if (strcmp(key, "namebox.image") == 0)
 		s3i_setup_namebox();
-	else if (strcmp(key, "choose.idle1") == 0)
+	else if (strcmp(key, "choose.box1.idle") == 0)
 		s3i_setup_choose(false, 0);
-	else if (strcmp(key, "choose.hover1") == 0)
-		s3i_setup_choose(false, 0);
-	else if (strcmp(key, "choose.idle2") == 0)
+	else if (strcmp(key, "choose.box1.hover") == 0)
+		s3i_setup_choose(true, 0);
+	else if (strcmp(key, "choose.box2.idle") == 0)
 		s3i_setup_choose(false, 1);
-	else if (strcmp(key, "choose.hover2") == 0)
+	else if (strcmp(key, "choose.box2.hover") == 0)
 		s3i_setup_choose(true, 1);
-	else if (strcmp(key, "choose.idle3") == 0)
+	else if (strcmp(key, "choose.box3.idle") == 0)
 		s3i_setup_choose(false, 2);
-	else if (strcmp(key, "choose.hover3") == 0)
+	else if (strcmp(key, "choose.box3.hover") == 0)
 		s3i_setup_choose(true, 2);
-	else if (strcmp(key, "choose.idl4") == 0)
+	else if (strcmp(key, "choose.box4.idl") == 0)
 		s3i_setup_choose(false, 3);
-	else if (strcmp(key, "choose.hover4") == 0)
+	else if (strcmp(key, "choose.box4.hover") == 0)
 		s3i_setup_choose(true, 3);
-	else if (strcmp(key, "choose.idle5") == 0)
+	else if (strcmp(key, "choose.box5.idle") == 0)
 		s3i_setup_choose(false, 4);
-	else if (strcmp(key, "choose.hover5") == 0)
+	else if (strcmp(key, "choose.box5.hover") == 0)
 		s3i_setup_choose(true, 4);
-	else if (strcmp(key, "choose.idle6") == 0)
+	else if (strcmp(key, "choose.box6.idle") == 0)
 		s3i_setup_choose(false, 5);
-	else if (strcmp(key, "choose.hover6") == 0)
+	else if (strcmp(key, "choose.box6.hover") == 0)
 		s3i_setup_choose(true, 5);
-	else if (strcmp(key, "choose.idle7") == 0)
+	else if (strcmp(key, "choose.box7.idle") == 0)
 		s3i_setup_choose(false, 6);
-	else if (strcmp(key, "choose.hover7") == 0)
+	else if (strcmp(key, "choose.box7.hover") == 0)
 		s3i_setup_choose(true, 6);
-	else if (strcmp(key, "choose.idle8") == 0)
+	else if (strcmp(key, "choose.box8.idle") == 0)
 		s3i_setup_choose(false, 7);
-	else if (strcmp(key, "choose.hover8") == 0)
+	else if (strcmp(key, "choose.box8.hover") == 0)
 		s3i_setup_choose(true, 7);
+
+	/* Update the layer (x, y) positions by config keys. */
+	s3_reload_stage_positions();
 
 	return true;
 }

@@ -20,8 +20,8 @@
   </p>
   <a href="https://discord.gg/YZsq9u9Mgr"><img src="https://img.shields.io/badge/suika3.vn-Discord-orange"></a>
   <img src="https://img.shields.io/badge/License-ZLib-orange.svg">
-  <img src="https://img.shields.io/github/stars/suika3-community/suika3.svg?style=flat&logo=github&colorB=orange&label=stars">
-  <img src="https://img.shields.io/github/forks/suika3-community/suika3.svg">
+  <img src="https://img.shields.io/github/stars/awemorris/suika3.svg?style=flat&logo=github&colorB=orange&label=stars">
+  <img src="https://img.shields.io/github/forks/awemorris/suika3.svg">
 </div>
 
 ---
@@ -48,7 +48,7 @@
 <div align="center">
   <a href="https://noctvm.io/test/">
     Click to play on the browser!<br>
-    <img src="https://github.com/suika3-community/suika3/blob/main/docs/img/screenshot-20260406.webp" alt="Suika3 Screenshot"><br>
+    <img src="https://github.com/awemorris/suika3/blob/main/docs/img/screenshot-20260406.webp" alt="Suika3 Screenshot"><br>
   </a>
 </div>
 
@@ -69,44 +69,113 @@
 
 ---
 
-## Build and Install
+## Build and Installation
+
+### Full SDK Download (Prebuilt Binary)
+
+Please refer to [Getting Started](docs/mkdocs-en/docs/getting-started.md).
+
+[https://github.com/awemorris/suika3/releases/latest/download/Suika3-full.zip](https://github.com/awemorris/suika3/releases/latest/download/Suika3-full.zip)
 
 ### Source Build
 
-In general, the following works:
+Please refer to [build.md](docs/mkdocs-en/docs/build.md) for platform-specific instructions.
+
 ```
+# Clone the repo.
 git clone https://github.com/awemorris/suika3.git
 cd suika3
+
+# Make a build directory.
 mkdir build && cd build
-cmake ..
-cmake --build . --parallel
-sudo cmake --install .
+
+# Build and install.
+cmake .. && cmake --build . --parallel && sudo cmake --install .
+
+# Run the sample.
 cd ../game
 suika3
 ```
 
-Please refer to [build.md](docs/mkdocs-en/docs/build.md) for platform-specific instructions.
+### Package Managers
 
-### Binary Installation
-
-Binary Downloads:
-| OS               | Link                                                                                                    |
-|------------------|---------------------------------------------------------------------------------------------------------|
-| Full             | [Full](https://github.com/awemorris/suika3/releases/latest/download/Suika3.zip)                         |
-| Windows          | [EXE](https://github.com/awemorris/suika3/releases/latest/download/suika3.exe)                          |
-| macOS            | [DMG](https://github.com/awemorris/suika3/releases/latest/download/Suika3.dmg)                          |
-| Linux amd64      | [AppImage x86_64](https://github.com/awemorris/suika3/releases/latest/download/suika3-x86_64.AppImage)  |
-
-**macOS:**
+Homebrew:
 ```
 brew tap awemorris/suika3
 brew install suika3
 ```
 
-**FreeBSD:**
+Flatpak:
+```
+wget https://github.com/awemorris/suika3/releases/latest/download/Suika3.flatpak
+flatpak install --user Suika3.flatpak
+```
+
+FreeBSD Ports:
 ```
 cd /usr/ports/games/suika3 && make install clean
 ```
+
+---
+
+## VS Code Syntax Highlighting
+
+There is an awesome VS Code extension by `@lalalll-lalalll` to support
+syntax highlighting for Suika3.
+
+Check it out: [NovelML-Highlighter](https://github.com/lalalll-lalalll/NovelML-Highlighter)
+
+To install this extension, visit the repository and download the .vsix
+file from the
+[Releases page](https://github.com/lalalll-lalalll/NovelML-Highlighter/releases)
+and install it by the following steps.
+
+**Step 1**:
+
+Open `EXTENSIONS` tab.
+
+<img src="https://raw.githubusercontent.com/awemorris/suika3/refs/heads/main/docs/img/syntax-highlighter-1.png" alt="Install highlighter 1" width="320" hspace="20">
+
+**Step 2**:
+
+Click "Install from VSIX..." from the "..." (Views and More Actions) menu, and select the downloaded file.
+
+<img src="https://raw.githubusercontent.com/awemorris/suika3/refs/heads/main/docs/img/syntax-highlighter-2.png" alt="Install highlighter 1" width="320" hspace="20">
+
+**What you get**:
+
+Now you have a beautiful development environment!
+
+<img src="https://raw.githubusercontent.com/awemorris/suika3/refs/heads/main/docs/img/syntax-highlighter-3.png" alt="Install highlighter 1" width="320" hspace="20">
+
+---
+
+## VS Code Integration
+
+### Desktop Execution
+
+Open the extracted folder by `Visual Studio Code`.
+
+**Click `Terminal --> Run Build Task` (or press Ctrl-Shift-B):**
+
+<img src="https://raw.githubusercontent.com/awemorris/suika3/refs/heads/main/docs/img/vscode-1.webp" alt="VSCode 1" width="640" hspace="20">
+
+**Suika3 will be executed:**
+
+<img src="https://raw.githubusercontent.com/awemorris/suika3/refs/heads/main/docs/img/vscode-2.webp" alt="VSCode 2" width="640" hspace="20">
+
+**Errors will be shown in PROBLEMS:**
+
+<img src="https://raw.githubusercontent.com/awemorris/suika3/refs/heads/main/docs/img/vscode-3.webp" alt="VSCode 3" width="640" hspace="20">
+
+### Android Execution
+
+Clicking the "Suika3: Build Android APK" task will automatically
+generate an APK file and install it on your Android device. There is
+no need to install the JDK or Android SDK manually, as they will be
+downloaded automatically in the build process!
+
+A similar workflow is planned for iOS as well. (Mac is required)
 
 ---
 
@@ -250,7 +319,6 @@ See [Quality Assurance](#quality-assurance) for the details.
 
 **Remaining Tasks:**
 - Website Update
-- Longer Sample Game
 - Document: `SRS: System Requirement Specification`
 - Document: `SDS: System Design Specification`
 
@@ -387,12 +455,13 @@ func render() {
 
 ## Examples
 
-A sample game is planned to be built in the end of March 2026.
+A sample game is included in the release zip.
 
-See the `game/` directory for:
-- Minimal demo project
-- Sample assets and NovelML snippets
-- `Ray` usage patterns
+See the `game/` folder for:
+- Demo project
+- Sample assets
+- NovelML usage
+- Ray usage
 
 ---
 
@@ -535,16 +604,16 @@ instant startup, and tight integration with the engine.
 The built-in JIT compiler supports a wide range of CPU architectures
 to cover most gaming consoles and smartphones, including:
 
-- ✅ Intel x86 (Xbox) [jit-x86.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-x86.c)
-- ✅ AMD64/x86_64 (PS4/PS5/Xbox One/Xbox series X|S) [jit-x86_64.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-x86_64.c)
-- ✅ ARMv5-ARMv7 (Nintendo DS/PS Vita) [jit-arm32.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-arm32.c)
-- ✅ Arm64 (Switch/Switch2) [jit-arm64.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-arm64.c)
-- ✅ PowerPC 32 (Wii/GameCube) [jit-ppc32.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-ppc32.c)
-- ✅ PowerPC 64 (PS3/Xbox 360) [jit-ppc64.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-ppc64.c)
-- ✅ MIPS32 (PS1/PSP) [jit-mips32.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-mips32.c)
-- ✅ MIPS64 (N64/PS2) [jit-mips64.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-mips64.c)
-- ✅ RISC-V 32 (for future devices) [jit-riscv32.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-riscv32.c)
-- ✅ RISC-V 64 (for future devices) [jit-riscv64.c](https://github.com/suika3-community/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-riscv64.c)
+- ✅ Intel x86 (Xbox) [jit-x86.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-x86.c)
+- ✅ AMD64/x86_64 (PS4/PS5/Xbox One/Xbox series X|S) [jit-x86_64.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-x86_64.c)
+- ✅ ARMv5-ARMv7 (Nintendo DS/PS Vita) [jit-arm32.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-arm32.c)
+- ✅ Arm64 (Switch/Switch2) [jit-arm64.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-arm64.c)
+- ✅ PowerPC 32 (Wii/GameCube) [jit-ppc32.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-ppc32.c)
+- ✅ PowerPC 64 (PS3/Xbox 360) [jit-ppc64.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-ppc64.c)
+- ✅ MIPS32 (PS1/PSP) [jit-mips32.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-mips32.c)
+- ✅ MIPS64 (N64/PS2) [jit-mips64.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-mips64.c)
+- ✅ RISC-V 32 (for future devices) [jit-riscv32.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-riscv32.c)
+- ✅ RISC-V 64 (for future devices) [jit-riscv64.c](https://github.com/awemorris/suika3/blob/main/external/PlayfieldEngine/external/NoctLang/src/core/jit-riscv64.c)
 
 These architectures are well-supported, we can say at least they all pass [the test suite](external/PlayfieldEngine/external/NoctLang/tests/run-syntax.sh).
 
@@ -762,22 +831,22 @@ experience for the player.
 
 The official recommended binary is the 64-bit version.
 
-| OS      | Version                     | Patch | CPU    | Runtimes                                                | 64-bit Binary | Direct3D |
-|---------|-----------------------------|-------|--------|---------------------------------------------------------|---------------|----------|
-| Windows | 11                          |       | x64    | (None required)                                         | ✅            | 12.0     |
-| Windows | 11                          |       | arm64  | (None required)                                         | ✅            | 12.0     |
-| Windows | 10                          |       | x64    | (None required)                                         | ✅            | 12.0     |
-| Windows | 10                          |       | arm64  | (None required)                                         | ✅            | 12.0     |
-| Windows | 8.1                         |       | x64    | (None required)                                         | ✅            | 11.0     |
-| Windows | 8                           |       | x64    | VC++ Redist 2015                                        | ✅            | 11.0     |
-| Windows | 7                           | SP1   | x64    | VC++ Redist 2015                                        | ✅            | 11.0     |
-| Windows | 7                           |       | x64    | VC++ Redist 2015, UCRT Update (KB2999226)               | ✅            | 11.0     |
-| Windows | Vista                       | SP2   | x64    | VC++ Redist 2015, Platform Update                       | ✅            | 11.0     |
-| Windows | Vista                       | SP1   | x64    | VC++ Redist 2025, DirectX End-User Runtimes (June 2010) | ✅            | 9.0      |
-| Windows | Vista                       |       | x64    | (No UCRT)                                               | ❌            | -        |
-| Windows | XP Professional x64 Edition | SP2   | x64    | (No UCRT)                                               | ❌            | -        |
-| Windows | XP Professional x64 Edition | SP1   | x64    | (No UCRT)                                               | ❌            | -        |
-| Windows | XP Professional x64 Edition |       | x64    | (No UCRT)                                               | ❌            | -        |
+| OS      | Version                     | Patch | CPU    | Runtimes                              | 64-bit Binary | Direct3D |
+|---------|-----------------------------|-------|--------|---------------------------------------|---------------|----------|
+| Windows | 11                          |       | x64    | (None required)                       | ✅            | 12.0     |
+| Windows | 11                          |       | arm64  | (None required)                       | ✅            | 12.0     |
+| Windows | 10                          |       | x64    | (None required)                       | ✅            | 12.0     |
+| Windows | 10                          |       | arm64  | (None required)                       | ✅            | 12.0     |
+| Windows | 8.1                         |       | x64    | (None required)                       | ✅            | 11.0     |
+| Windows | 8                           |       | x64    | (None required)                       | ✅            | 11.0     |
+| Windows | 7                           | SP1   | x64    | (None required)                       | ✅            | 11.0     |
+| Windows | 7                           |       | x64    | UCRT Update (KB2999226)               | ✅            | 11.0     |
+| Windows | Vista                       | SP2   | x64    | Platform Update                       | ✅            | 11.0     |
+| Windows | Vista                       | SP1   | x64    | DirectX End-User Runtimes (June 2010) | ✅            | 9.0      |
+| Windows | Vista                       |       | x64    | DirectX End-User Runtimes (June 2010) | ✅            | 9.0      |
+| Windows | XP Professional x64 Edition | SP2   | x64    | DirectX End-User Runtimes (June 2010) | ✅            | 9.0      |
+| Windows | XP Professional x64 Edition | SP1   | x64    | DirectX End-User Runtimes (June 2010) | ✅            | 9.0      |
+| Windows | XP Professional x64 Edition |       | x64    | DirectX End-User Runtimes (June 2010) | ✅            | 9.0      |
 
 ### 32-bit Windows Compatibility List
 
@@ -795,28 +864,28 @@ supporting legacy systems through older runtimes.
 | Windows | 8.1                         |       | x64    | (None required)                        | ✅            | 11.0                   |
 | Windows | 8                           |       | x86    | (None required)                        | ✅            | 11.0                   |
 | Windows | 8                           |       | x64    | (None required)                        | ✅            | 11.0                   |
-| Windows | 7                           |       | x86    | (None required)                        | ✅            | 11.0                   |
-| Windows | 7                           |       | x64    | (None required)                        | ✅            | 11.0                   |
 | Windows | 7                           | SP1   | x86    | (None required)                        | ✅            | 11.0                   |
+| Windows | 7                           |       | x86    | (None required)                        | ✅            | 11.0                   |
 | Windows | 7                           | SP1   | x64    | (None required)                        | ✅            | 11.0                   |
-| Windows | Vista                       |       | x86    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
-| Windows | Vista                       |       | x64    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
-| Windows | Vista                       | SP1   | x86    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
-| Windows | Vista                       | SP1   | x64    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
+| Windows | 7                           |       | x64    | (None required)                        | ✅            | 11.0                   |
 | Windows | Vista                       | SP2   | x86    | DirectX 11 Platform Update             | ✅            | 11.0                   |
+| Windows | Vista                       | SP1   | x86    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
+| Windows | Vista                       |       | x86    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
 | Windows | Vista                       | SP2   | x64    | DirectX 11 Platform Update             | ✅            | 11.0                   |
-| Windows | XP                          |       | x86    | DirectX 9.0b Runtime                   | ✅            | 9.0                    |
-| Windows | XP                          | SP1   | x86    | DirectX 9.0b Runtime                   | ✅            | 9.0                    |
-| Windows | XP                          | SP2   | x86    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
+| Windows | Vista                       | SP1   | x64    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
+| Windows | Vista                       |       | x64    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
 | Windows | XP                          | SP3   | x86    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
-| Windows | XP Professional x64 Edition |       | x64    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
-| Windows | XP Professional x64 Edition | SP1   | x64    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
+| Windows | XP                          | SP2   | x86    |                                        | -->           | Need VS2008            |
+| Windows | XP                          | SP1   | x86    |                                        | -->           | Need VS2008            |
+| Windows | XP                          |       | x86    | DirectX 9.0b Runtime                   | ✅            | 9.0                    |
 | Windows | XP Professional x64 Edition | SP2   | x64    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
-| Windows | 2000                        |       | x86    | DirectX End-User Runtimes (Dec 2006)   | ✅            | 9.0                    |
-| Windows | 2000                        | SP1   | x86    | DirectX End-User Runtimes (Dec 2006)   | ✅            | 9.0                    |
-| Windows | 2000                        | SP2   | x86    | DirectX End-User Runtimes (Dec 2006)   | ✅            | 9.0                    |
-| Windows | 2000                        | SP3   | x86    | DirectX End-User Runtimes (Dec 2006)   | ✅            | 9.0                    |
-| Windows | 2000                        | SP4   | x86    | DirectX End-User Runtimes (Dec 2006)   | ✅            | 9.0                    |
+| Windows | XP Professional x64 Edition | SP1   | x64    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
+| Windows | XP Professional x64 Edition |       | x64    | DirectX End-User Runtimes (June 2010)  | ✅            | 9.0                    |
+| Windows | 2000                        | SP4   | x86    | DirectX End-User Runtimes (June 2010)  | -->           | Need VS2008            |
+| Windows | 2000                        | SP3   | x86    | DirectX End-User Runtimes (June 2010)  | -->           | Need VS2008            |
+| Windows | 2000                        | SP2   | x86    | DirectX End-User Runtimes (June 2010)  | -->           | Need VS2008            |
+| Windows | 2000                        | SP1   | x86    | DirectX End-User Runtimes (June 2010)  | -->           | Need VS2008            |
+| Windows | 2000                        |       | x86    | DirectX End-User Runtimes (June 2010)  | -->           | Need VS2008            |
 | Windows | Me                          |       | x86    |                                        | -->           | Need VC++ 6.0          |
 | Windows | 98                          |       | x86    |                                        | -->           | Need VC++ 6.0          |
 | Windows | 95                          |       | x86    |                                        | -->           | Need VC++ 6.0          |
@@ -1306,7 +1375,7 @@ released under the permissive `ZLib License`.
 
 ```
 Suika3
-Copyright (c) 2026 The Suika3 Community
+Copyright (c) 2026 Awe Morris / SCHOLA SUIKAE
 ```
 
 The full license is available at [LICENSE](LICENSE) and [NOTICE](NOTICE).
@@ -1341,23 +1410,28 @@ success in a high-stakes production environment.
 
 **Not looking for a formal contract? No problem.** If you are an indie
 developer or hobbyist and prefer to keep things casual, just ping us
-on Discord with any questions. We're always happy to chat, and we'll
-do our best to respond or push a fix as soon as possible! ;-)
+on GitHub Issue or Discord with any questions. We're always happy to
+chat, and we'll do our best to respond or push a fix as soon as
+possible! ;-)
 
 ---
 
 ## Community
 
+### Discord
+
 [Discord Server](https://discord.gg/YZsq9u9Mgr)
+
+Our server does not tolerate any form of discrimination. It is an
+inclusive space that embraces all human differences, including, but
+not limited to, race, gender, skill levels, and neurodiversity.
 
 ### Recruiting
 
 We are currently looking for contributors in the following areas:
 
 * Documentation editors
-* Testing engineers
-* iOS engineers
-* Android engineers
+* Software Engineer in Testing
 * HarmonyOS NEXT testers
 
 ### Our Commitment to Inclusivity
@@ -1393,13 +1467,8 @@ Creating your own rebranded version is a natural and fully supported
 use of the project.
 
 Because of this philosophy, Suika3 does not employ a formal governance
-structure. Instead, the project is guided by its lead maintainers in
-close collaboration with the community.
-
-### Maintainers
-
-- Awe Morris (Systems Engineer)
-- Aitsuki (Security Engineer)
+structure. Instead, the project is guided by its lead maintainer in
+close collaboration with community users.
 
 ---
 
@@ -1557,7 +1626,7 @@ Now preparing...
 - [Doesn't "over 25 years of maturity" contradict "zero operational use"?](#doesnt-over-25-years-of-maturity-contradict-zero-operational-use)
 - [Oh it's bus factor 1, isn't it?](#oh-its-bus-factor-1-isnt-it)
 - [Can companies maintain their own forks?](#can-companies-maintain-their-own-forks)
-- [It says community-led, but who makes the decisions?](#it-says-community-led-but-who-makes-the-decisions)
+- [Who makes the decisions?](#who-makes-the-decisions)
 - [Is Suika3 open source software? Can it be used commercially?](#is-suika3-open-source-software-can-it-be-used-commercially)
 - [What about the license for third-party libraries?](#what-about-the-license-for-third-party-libraries)
 - [JIT is disabled on iOS/console, so what should I do?](#jit-is-disabled-on-iosconsole-so-what-should-i-do)
@@ -1580,6 +1649,7 @@ Now preparing...
 - [Will there be breaking changes? What is the compatibility policy?](#will-there-be-breaking-changes-what-is-the-compatibility-policy)
 - [Does it support DLC or in-app purchases?](#does-it-support-dlc-or-in-app-purchases)
 - [Why the deep devotion to Apple and iPhone?](#why-the-deep-devotion-to-apple-and-iphone)
+- [Why Using Python on iOS is Challenging?](#why-using-python-on-ios-is-challenging)
 
 ### What's this?
 
@@ -1622,16 +1692,32 @@ maintenance. Furthermore, "professional/enterprise support" is
 available, enabling the transfer of necessary know-how to the adopting
 organization.
 
-### It says community-led, but who makes the decisions?
+### Who makes the decisions?
 
-The community handles maintenance, while lead members take the
-lead. We do not implement formal governance.
+The lead developers make the decisions. We do not maintain a formal
+governance structure for the community.
 
 ### Is Suika3 open source software? Can it be used commercially?
 
-Yes, it is OSS and can be used commercially. Since it is a permissive
-license, there is no requirement to disclose the source code when
-modifying it.
+Suika3 is released under the zlib license and qualifies as Open Source
+Software (OSS) under the FOSS definition. It can be used freely in
+commercial projects.
+
+However, its positioning differs slightly from many projects typically
+found on GitHub. While many OSS projects thrive by building upon large
+existing ecosystems, Suika3 is designed around core components
+developed almost entirely from scratch, with external dependencies
+kept to an absolute minimum.
+
+While we have deep respect for the philosophy of GNU/Linux and the
+broader open-source community, our goal has always been to deliver
+"commercial-grade quality" that meets our own rigorous
+standards. Because of this strong independence, Suika3 may feel closer
+to "commercial software provided as OSS" than to a typical
+community-driven OSS project.
+
+Accordingly, we actively welcome closed-source forks and downstream
+commercial products built on top of this project.
 
 ### What about the license for third-party libraries?
 
@@ -1871,3 +1957,50 @@ Yet for over four decades, Apple has continually redefined the landscape of comp
 
 We are proud to support their platforms, and our commitment remains unwavering —  
 from the iPhone all the way to Vision Pro.
+
+### Why Using Python on iOS is Challenging?
+
+On the App Store, Apple enforces a de facto strict limitation on
+"Virtual Machines (VMs) for compatibility" that involve dynamic code
+execution. Rather than being explicitly detailed in the written
+guidelines, this is widely recognized among developers as an "implicit
+rule" of the review process. A prime example is the near-total absence
+of general-purpose apps bundled with a Java runtime.
+
+In contrast, languages like `Lua`, frequently used in game
+development, are relatively well-accepted. This is because Lua is easy
+to "sandbox," making it suitable for a restricted scripting
+environment isolated from the app’s core functionality. In other
+words, it allows for a structure where the core OS features and the
+fundamental behavior of the app cannot be arbitrarily altered after
+the review process.
+
+`Python`, however, is a different story. It lacks a robust, built-in
+sandboxing mechanism by default, and depending on the design, scripts
+can gain broad access to iOS functionalities. From Apple’s
+perspective, this is often viewed as a "difficult-to-control VM" that
+allows significant behavioral changes post-review, making it a
+frequent target for rejection.
+
+You might wonder, "Then why are there Ren'Py games on the App Store?"
+This is the crux of the matter. In reality, Apple's review process
+involves a degree of discretionary operation. If a project comes from
+a major publisher or is a high-quality work that Apple deems "adds
+value to the overall store ecosystem," it may pass even if it is
+Python-based.
+
+Essentially, if you challenge the store with Ren'Py, you need an
+overwhelming level of polish to convince the reviewer. However, visual
+novels are a genre that relies heavily on artistic sensibility; it is
+no simple task to instantly convey that value to a reviewer whose
+primary focus is technical compliance.
+
+This is where Suika3 comes in.
+
+Suika3 utilizes a design that either converts scripts into native code
+beforehand via AOT (Ahead-of-Time compilation) or executes them within
+a strictly managed sandbox VM. This approach significantly reduces the
+technical risks associated with the App Store review process.
+
+By removing these technical barriers upfront, Suika3 empowers
+developers to compete solely on the "quality of their work."
