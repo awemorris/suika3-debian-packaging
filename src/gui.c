@@ -217,7 +217,7 @@ struct gui_button {
 	int text_x;
 	int text_y;
 
-	/* TYPE_PREVIEW */
+	/* TYPE_PREVIEW/TYPE_SAVE/TYPE_LOAD */
 	int margin_left;
 	int margin_top;
 	int margin_right;
@@ -379,6 +379,9 @@ static int cur_alpha;
 
 /* Is first frame? */
 static bool is_first_frame;
+
+/* Is load failed? */
+static bool is_load_failed;
 
 /* Did save? */
 static bool did_save;
@@ -634,6 +637,7 @@ s3_load_gui_file(
 	bomb_time = 0;
 	is_click_cancel = false;
 	is_escape_cancel = false;
+	is_load_failed = false;
 
 	success = false;
 	do {
@@ -847,6 +851,10 @@ s3i_run_gui_update(void)
 		return false;
 
 	is_first_frame = false;
+
+	/* Exit if failed to load. */
+	if (is_load_failed)
+		return false;
 
 	return true;
 }
@@ -2500,10 +2508,10 @@ draw_save_text_item(
 		y,
 		b->width,
 		b->height,
-		x,		/* left_margin */
-		0,		/* right_margin */
-		0,		/* top_margin */
-		0,		/* bottom_margin */
+		x,			/* left_margin */
+		b->margin_right,	/* right_margin */
+		0,			/* top_margin */
+		b->margin_bottom,	/* bottom_margin */
 		multiline ? cfg_margin_line : 0,
 		cfg_margin_char,
 		color,
@@ -2583,7 +2591,8 @@ process_load(
 		return;
 
 	/* Execute a load. */
-	s3_execute_load_local(data_index);
+	if (!s3_execute_load_local(data_index))
+		is_load_failed = true;
 
 	/* Save the last loaded page. */
 	conf_gui_save_last_page = save_page;
@@ -2849,11 +2858,11 @@ draw_history_name_item(
 		pen_y,
 		b->width,	/* area_width */
 		b->height,	/* area_height */
-		0,		/* left_margin */
-		0,		/* right_margin */
-		0,		/* top_margin */
-		0,		/* bottom_margin */
-		0,		/* line margin */
+		0,			/* left_margin */
+		b->margin_right,	/* right_margin */
+		0,			/* top_margin */
+		b->margin_bottom,	/* bottom_margin */
+		0,			/* line margin */
 		conf_gui_history_name_margin_char,
 		color,
 		outline_color,
@@ -2890,6 +2899,7 @@ draw_history_text_item(
 	s3_pixel_t color, outline_color;
 	int total_chars;
 	int pen_x, pen_y;
+	int margin_left, margin_top;
 
 	b = &button[index];
 
@@ -2902,6 +2912,8 @@ draw_history_text_item(
 			pen_x = b->msg_x;
 			pen_y = b->msg_y;
 		}
+		margin_left = pen_x;
+		margin_top = 0;
 	} else {
 		if (has_name) {
 			pen_x = b->text_x - conf_gui_history_text_font_size;
@@ -2910,6 +2922,8 @@ draw_history_text_item(
 			pen_x = b->msg_x - conf_gui_history_text_font_size;
 			pen_y = b->msg_y;
 		}
+		margin_top = pen_y;
+		margin_left = 0;
 	}
 
 	/* Determine the color */
@@ -2935,10 +2949,10 @@ draw_history_text_item(
 		pen_y,
 		b->width,	/* area_width */
 		b->height,	/* area_height */
-		0,		/* left_margin */
-		0,		/* right_margin */
-		0,		/* top_margin */
-		0,		/* bottom_margin */
+		margin_left,		/* left_margin */
+		b->margin_right,	/* right_margin */
+		margin_top,		/* top_margin */
+		b->margin_bottom,	/* bottom_margin */
 		conf_gui_history_text_margin_line,
 		conf_gui_history_text_margin_char,
 		color,
@@ -3467,10 +3481,10 @@ draw_var_value(
 		0,		/* pen_y */
 		b->width,
 		b->height,
-		0,		/* left_margin */
-		0,		/* right_margin */
-		0,		/* top_margin */
-		0,		/* bottom_margin */
+		b->margin_left,		/* left_margin */
+		b->margin_right,	/* right_margin */
+		b->margin_top,		/* top_margin */
+		b->margin_bottom,	/* bottom_margin */
 		0,		/* line_margin */
 		conf_msgbox_margin_char,
 		color,

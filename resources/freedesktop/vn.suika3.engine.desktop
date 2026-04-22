@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Suika3
+Comment=Portable 2D game and visual novel engine
+Exec=suika3-run.sh %f
+Icon=vn.suika3.engine
+Terminal=false
+Type=Application
+Categories=Game;
+MimeType=application/x-rayscript;application/x-novelml;
+StartupWMClass=Suika3
+StartupNotify=true

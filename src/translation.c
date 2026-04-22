@@ -1,69 +1,81 @@
 #include <string.h>
 
-const char *s3_get_system_language(void);
+const char *pf_get_system_language(void);
 
 const char *s3_gettext(const char *msg)
 {
-    const char *lang_code = s3_get_system_language();
-    if (strcmp(msg, "File %s: Line %d: %s") == 0) {
-        if (strncmp(lang_code, "es", 2) == 0) return "Archivo %s: Línea %d: %s";
-        if (strncmp(lang_code, "fr", 2) == 0) return "Fichier %s: Ligne %d: %s";
-        if (strncmp(lang_code, "it", 2) == 0) return "File %s: Linea %d: %s";
-        if (strncmp(lang_code, "de", 2) == 0) return "Datei %s: Zeile %d: %s";
-        if (strncmp(lang_code, "el", 2) == 0) return "Αρχείο %s: Γραμμή %d: %s";
-        if (strncmp(lang_code, "ru", 2) == 0) return "Файл %s: Строка %d: %s";
-        if (strncmp(lang_code, "zh", 2) == 0) return "文件 %s: 第 %d 行: %s";
-        if (strncmp(lang_code, "tw", 2) == 0) return "檔案 %s: 第 %d 行: %s";
-        if (strncmp(lang_code, "ja", 2) == 0) return "ファイル %s: %d 行目: %s";
-        return "File %s: Line %d: %s";
+    const char *lang_code = pf_get_system_language();
+    if (strcmp(msg, "%s:%d: %s") == 0) {
+        if (strncmp(lang_code, "es", 2) == 0) return "%s:%d: %s";
+        if (strncmp(lang_code, "fr", 2) == 0) return "%s:%d : %s";
+        if (strncmp(lang_code, "it", 2) == 0) return "%s:%d: %s";
+        if (strncmp(lang_code, "de", 2) == 0) return "%s:%d: %s";
+        if (strncmp(lang_code, "el", 2) == 0) return "%s:%d: %s";
+        if (strncmp(lang_code, "ru", 2) == 0) return "%s:%d: %s";
+        if (strncmp(lang_code, "zh", 2) == 0) return "%s:%d: %s";
+        if (strncmp(lang_code, "tw", 2) == 0) return "%s:%d: %s";
+        if (strncmp(lang_code, "ja", 2) == 0) return "%s:%d: %s";
+        return "%s:%d: %s";
     }
-    if (strcmp(msg, "File %s: Line %d: Tag %s: ") == 0) {
-        if (strncmp(lang_code, "es", 2) == 0) return "Archivo %s: Línea %d: Etiqueta %s: ";
-        if (strncmp(lang_code, "fr", 2) == 0) return "Fichier %s: Ligne %d: Balise %s: ";
-        if (strncmp(lang_code, "it", 2) == 0) return "File %s: Linea %d: Tag %s: ";
-        if (strncmp(lang_code, "de", 2) == 0) return "Datei %s: Zeile %d: Tag %s: ";
-        if (strncmp(lang_code, "el", 2) == 0) return "Αρχείο %s: Γραμμή %d: Ετικέτα %s: ";
-        if (strncmp(lang_code, "ru", 2) == 0) return "Файл %s: Строка %d: Тег %s: ";
-        if (strncmp(lang_code, "zh", 2) == 0) return "文件 %s: 第 %d 行: 标签 %s: ";
-        if (strncmp(lang_code, "tw", 2) == 0) return "檔案 %s: 第 %d 行: 標籤 %s: ";
-        if (strncmp(lang_code, "ja", 2) == 0) return "ファイル %s: %d 行目: タグ %s: ";
-        return "File %s: Line %d: Tag %s: ";
+    if (strcmp(msg, "Error: %s:%d: %s") == 0) {
+        if (strncmp(lang_code, "es", 2) == 0) return "Error: %s:%d: %s";
+        if (strncmp(lang_code, "fr", 2) == 0) return "Erreur : %s:%d : %s";
+        if (strncmp(lang_code, "it", 2) == 0) return "Errore: %s:%d: %s";
+        if (strncmp(lang_code, "de", 2) == 0) return "Fehler: %s:%d: %s";
+        if (strncmp(lang_code, "el", 2) == 0) return "Σφάλμα: %s:%d: %s";
+        if (strncmp(lang_code, "ru", 2) == 0) return "Ошибка: %s:%d: %s";
+        if (strncmp(lang_code, "zh", 2) == 0) return "错误: %s:%d: %s";
+        if (strncmp(lang_code, "tw", 2) == 0) return "錯誤: %s:%d: %s";
+        if (strncmp(lang_code, "ja", 2) == 0) return "エラー: %s:%d: %s";
+        return "Error: %s:%d: %s";
     }
-    if (strcmp(msg, "File %s: Line %d: Runtime error.") == 0) {
-        if (strncmp(lang_code, "es", 2) == 0) return "Archivo %s: Línea %d: Error de ejecución.";
-        if (strncmp(lang_code, "fr", 2) == 0) return "Fichier %s: Ligne %d: Erreur d'exécution.";
-        if (strncmp(lang_code, "it", 2) == 0) return "File %s: Linea %d: Erreur d'esecuzione.";
-        if (strncmp(lang_code, "de", 2) == 0) return "Datei %s: Zeile %d: Laufzeitfehler.";
-        if (strncmp(lang_code, "el", 2) == 0) return "Αρχείο %s: Γραμμή %d: Σφάλμα κατά την εκτέλεση.";
-        if (strncmp(lang_code, "ru", 2) == 0) return "Файл %s: Строка %d: Ошибка времени выполнения.";
-        if (strncmp(lang_code, "zh", 2) == 0) return "文件 %s: 第 %d 行: 运行时错误。";
-        if (strncmp(lang_code, "tw", 2) == 0) return "檔案 %s: 第 %d 行: 執行階段錯誤。";
-        if (strncmp(lang_code, "ja", 2) == 0) return "ファイル %s: %d 行目: 実行時エラー。";
-        return "File %s: Line %d: Runtime error.";
+    if (strcmp(msg, "Error: %s:%d: Tag %s: ") == 0) {
+        if (strncmp(lang_code, "es", 2) == 0) return "Error: %s:%d: Tag %s: ";
+        if (strncmp(lang_code, "fr", 2) == 0) return "Erreur : %s:%d : Tag %s: ";
+        if (strncmp(lang_code, "it", 2) == 0) return "Errore: %s:%d: Tag %s: ";
+        if (strncmp(lang_code, "de", 2) == 0) return "Fehler: %s:%d: Tag %s: ";
+        if (strncmp(lang_code, "el", 2) == 0) return "Σφάλμα: %s:%d: Tag %s: ";
+        if (strncmp(lang_code, "ru", 2) == 0) return "Ошибка: %s:%d: Tag %s: ";
+        if (strncmp(lang_code, "zh", 2) == 0) return "错误: %s:%d: Tag %s: ";
+        if (strncmp(lang_code, "tw", 2) == 0) return "錯誤: %s:%d: Tag %s: ";
+        if (strncmp(lang_code, "ja", 2) == 0) return "エラー: %s:%d: Tag %s: ";
+        return "Error: %s:%d: Tag %s: ";
     }
-    if (strcmp(msg, "%s:%d: Tag \"%s\" not found.") == 0) {
-        if (strncmp(lang_code, "es", 2) == 0) return "%s:%d: No se encontró la etiqueta \"%s\".";
-        if (strncmp(lang_code, "fr", 2) == 0) return "%s:%d : Balise \"%s\" introuvable.";
-        if (strncmp(lang_code, "it", 2) == 0) return "%s:%d: Tag \"%s\" non trovato.";
-        if (strncmp(lang_code, "de", 2) == 0) return "%s:%d: Tag \"%s\" wurde nicht gefunden.";
-        if (strncmp(lang_code, "el", 2) == 0) return "%s:%d: Η ετικέτα \"%s\" δεν βρέθηκε.";
-        if (strncmp(lang_code, "ru", 2) == 0) return "%s:%d: Тег \"%s\" не найден.";
-        if (strncmp(lang_code, "zh", 2) == 0) return "%s:%d: 未找到标签 \"%s\"。";
-        if (strncmp(lang_code, "tw", 2) == 0) return "%s:%d: 找不到標籤 \"%s\"。";
-        if (strncmp(lang_code, "ja", 2) == 0) return "%s:%d: タグ \"%s\" がみつかりません。";
-        return "%s:%d: Tag \"%s\" not found.";
+    if (strcmp(msg, "Error: %s:%d: Runtime error") == 0) {
+        if (strncmp(lang_code, "es", 2) == 0) return "Error: %s:%d: Error de ejecución";
+        if (strncmp(lang_code, "fr", 2) == 0) return "Erreur : %s:%d: Erreur d'exécution";
+        if (strncmp(lang_code, "it", 2) == 0) return "Errore: %s:%d: Erreur d'esecuzione";
+        if (strncmp(lang_code, "de", 2) == 0) return "Fehler: %s:%d: Laufzeitfehler";
+        if (strncmp(lang_code, "el", 2) == 0) return "Σφάλμα: %s:%d: Σφάλμα κατά την εκτέλεση";
+        if (strncmp(lang_code, "ru", 2) == 0) return "Ошибка: %s:%d: Ошибка времени выполнения";
+        if (strncmp(lang_code, "zh", 2) == 0) return "错误: %s:%d: 运行时错误";
+        if (strncmp(lang_code, "tw", 2) == 0) return "錯誤: %s:%d: 執行階段錯誤";
+        if (strncmp(lang_code, "ja", 2) == 0) return "エラー: %s:%d: 実行時エラー";
+        return "Error: %s:%d: Runtime error";
     }
-    if (strcmp(msg, "%s:%d: \"Tag_%s\" is not a function.") == 0) {
-        if (strncmp(lang_code, "es", 2) == 0) return "%s:%d: \"Tag_%s\" no es una función.";
-        if (strncmp(lang_code, "fr", 2) == 0) return "%s:%d : \"Tag_%s\" n'est pas une fonction.";
-        if (strncmp(lang_code, "it", 2) == 0) return "%s:%d: \"Tag_%s\" non è una funzione.";
-        if (strncmp(lang_code, "de", 2) == 0) return "%s:%d: \"Tag_%s\" ist keine Funktion.";
-        if (strncmp(lang_code, "el", 2) == 0) return "%s:%d: Το \"Tag_%s\" δεν είναι συνάρτηση.";
-        if (strncmp(lang_code, "ru", 2) == 0) return "%s:%d: «Tag_%s» не является функцией.";
-        if (strncmp(lang_code, "zh", 2) == 0) return "%s:%d: \"Tag_%s\" 不是函数。";
-        if (strncmp(lang_code, "tw", 2) == 0) return "%s:%d: \"Tag_%s\" 不是函式。";
-        if (strncmp(lang_code, "ja", 2) == 0) return "%s:%d: \"Tag_%s\" は関数ではありません。";
-        return "%s:%d: \"Tag_%s\" is not a function.";
+    if (strcmp(msg, "Error: %s:%d: Tag \"%s\" not found.") == 0) {
+        if (strncmp(lang_code, "es", 2) == 0) return "Error: %s:%d: No se encontró la etiqueta \"%s\".";
+        if (strncmp(lang_code, "fr", 2) == 0) return "Erreur : %s:%d : Balise \"%s\" introuvable.";
+        if (strncmp(lang_code, "it", 2) == 0) return "Errore: %s:%d: Tag \"%s\" non trovato.";
+        if (strncmp(lang_code, "de", 2) == 0) return "Fehler: %s:%d: Tag \"%s\" wurde nicht gefunden.";
+        if (strncmp(lang_code, "el", 2) == 0) return "Σφάλμα: %s:%d: Η ετικέτα \"%s\" δεν βρέθηκε.";
+        if (strncmp(lang_code, "ru", 2) == 0) return "Ошибка: %s:%d: Тег \"%s\" не найден.";
+        if (strncmp(lang_code, "zh", 2) == 0) return "错误: %s:%d: 未找到标签 \"%s\"。";
+        if (strncmp(lang_code, "tw", 2) == 0) return "錯誤: %s:%d: 找不到標籤 \"%s\"。";
+        if (strncmp(lang_code, "ja", 2) == 0) return "エラー: %s:%d: タグ \"%s\" がみつかりません。";
+        return "Error: %s:%d: Tag \"%s\" not found.";
+    }
+    if (strcmp(msg, "Error: %s:%d: \"Tag_%s\" is not a function.") == 0) {
+        if (strncmp(lang_code, "es", 2) == 0) return "Error: %s:%d: \"Tag_%s\" no es una función.";
+        if (strncmp(lang_code, "fr", 2) == 0) return "Erreur : %s:%d : \"Tag_%s\" n'est pas une fonction.";
+        if (strncmp(lang_code, "it", 2) == 0) return "Errore: %s:%d: \"Tag_%s\" non è una funzione.";
+        if (strncmp(lang_code, "de", 2) == 0) return "Fehler: %s:%d: \"Tag_%s\" ist keine Funktion.";
+        if (strncmp(lang_code, "el", 2) == 0) return "Σφάλμα: %s:%d: Το \"Tag_%s\" δεν είναι συνάρτηση.";
+        if (strncmp(lang_code, "ru", 2) == 0) return "Ошибка: %s:%d: «Tag_%s» не является функцией.";
+        if (strncmp(lang_code, "zh", 2) == 0) return "错误: %s:%d: \"Tag_%s\" 不是函数。";
+        if (strncmp(lang_code, "tw", 2) == 0) return "錯誤: %s:%d: \"Tag_%s\" 不是函式。";
+        if (strncmp(lang_code, "ja", 2) == 0) return "エラー: %s:%d: \"Tag_%s\" は関数ではありません。";
+        return "Error: %s:%d: \"Tag_%s\" is not a function.";
     }
     if (strcmp(msg, "Argument \"%s\" not specified.") == 0) {
         if (strncmp(lang_code, "es", 2) == 0) return "No se ha especificado el argumento \"%s\".";
@@ -724,6 +736,17 @@ const char *s3_gettext(const char *msg)
         if (strncmp(lang_code, "tw", 2) == 0) return "檔案 \"%s\" 第 %d 行設定無効。";
         if (strncmp(lang_code, "ja", 2) == 0) return "ファイル \"%s\" の %d 行目の設定が不正です。";
         return "Invalid config line at file \"%s\" line %d.";
+    }
+    if (strcmp(msg, "No matching localized text.") == 0) {
+        if (strncmp(lang_code, "es", 2) == 0) return "No se encontro un texto localizado coincidente.";
+        if (strncmp(lang_code, "fr", 2) == 0) return "Aucun texte localisé correspondant n'a été trouvé.";
+        if (strncmp(lang_code, "it", 2) == 0) return "Nessun testo localizzato corrispondente trovato.";
+        if (strncmp(lang_code, "de", 2) == 0) return "Kein passender lokalisierter Text gefunden.";
+        if (strncmp(lang_code, "el", 2) == 0) return "Δεν βρέθηκε αντίστοιχο τοπικό κείμενο.";
+        if (strncmp(lang_code, "ru", 2) == 0) return "Соответствующий локализованный текст не найден.";
+        if (strncmp(lang_code, "zh", 2) == 0) return "未找到匹配的本地化文本。";
+        if (strncmp(lang_code, "ja", 2) == 0) return "テキストのローカライズ版がマッチしませんでした。";
+        return "No matching localized text.";
     }
     return msg;
 }

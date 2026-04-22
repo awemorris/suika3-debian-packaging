@@ -239,3 +239,179 @@ Fixed:
 ### Commits
 
 - 3cf43369f4a71ac8eda40ff0528baa1b1bee74ba
+
+---
+
+## Sequence of a save and loads will clear background
+
+* Report Details
+    * ID: BUG-20260419-001
+    * Status: Resolved
+    * Component: Suika3
+    * Severity: high
+    * Priority: high
+    * Reproducibility: always
+    * First Found In: dcc84e48e887931ad43413b53a29f1ae2a544092
+    * Fixed In: 3fa47574eb076724a968b1f35481ecdf8756ada3
+    * Reported Date: 15:00 18 April 2026
+    * Fixed Date: 00:15 19 April 2026
+    * Detection: found in a testing for NVL
+    * Root Cause Type: Internal API misusage
+    * OS: All
+    * CPU: All
+    * GitHub Issue: 
+
+### Report
+
+After performing a sequence of saving and loading
+(specifically save -> load -> load),
+the background image fails to load.
+
+### Analysis
+
+In `s3_set_layer_image()`, `destroy_layer()` is called
+internally. This is a misuse of the internal API;
+`destroy_layer()` also frees the filename of the layer.
+
+Consequently, the following sequence in `save.c` corrupts the layer's
+filename:
+
+```
+s3_set_layer_file_name()
+s3_set_layer_image()
+```
+
+`s3_set_layer_image()` should call `s3_destroy_image()` instead of
+destroy_layer().
+
+### Patch
+
+`s3_set_layer_image()` has been fixed.
+
+Files modified:
+- src/stage.c
+
+### Commits
+
+- 3fa47574eb076724a968b1f35481ecdf8756ada3
+
+---
+
+## Load causes a crash in NVL mode
+
+* Report Details
+    * ID: BUG-20260419-002
+    * Status: Resolved
+    * Component: Suika3
+    * Severity: high
+    * Priority: high
+    * Reproducibility: always
+    * First Found In: 81ddb990151c3b20828598eb06df9aae5d1a04d3
+    * Fixed In: 288e659b1e07a5374a21fdb0bc16ee4cdc229d97
+    * Reported Date: 02:00 19 April 2026
+    * Fixed Date: 04:20 19 April 2026
+    * Detection: found in a testing for NVL
+    * Root Cause Type: Lack of boundary condition
+    * OS: All
+    * CPU: All
+
+### Report
+
+Save in NVL mode, restart Suika3, then load.
+This will cause a crash.
+
+### Analysis
+
+In `s3_append_history()`, `last_history_top` may be `-1` after a restart.
+In this situation, `history[last_history_top]` may be an invalid access.
+
+### Patch
+
+`s3_append_history()` has been fixed.
+
+Files modified:
+- src/history.c
+
+### Commits
+
+- 288e659b1e07a5374a21fdb0bc16ee4cdc229d97
+
+---
+
+## Cannot save on Wasm
+
+* Report Details
+    * ID: BUG-20260420-001
+    * Status: Resolved
+    * Component: StratoHAL
+    * Severity: high
+    * Priority: high
+    * Reproducibility: always
+    * First Found In: 86a91e17752978090ddc442743d67312d54fb7303
+    * Fixed In: f67d849e208413660f27201c6697ed261ca46c51
+    * Reported Date: 04:16 20 April 2026
+    * Fixed Date: 06:15 20 April 2026
+    * Detection: found in a multiplatform testing (GitHub #7)
+    * Root Cause Type: mkdir() call missing
+    * OS: All
+    * CPU: All
+
+### Report
+
+On the Wasm version, save will cause an error.
+
+### Analysis
+
+In `emmain.c`, `hal_make_save_directory()` is not implemented.
+In addition, that function is not called.
+
+### Patch
+
+`hal_make_save_directory()` has been fixed.
+
+Files modified:
+- external/PlayfieldEngine/external/StratoHAL/src/emmain.c
+
+### Commits
+
+- f67d849e208413660f27201c6697ed261ca46c51
+
+---
+
+## Cannot load save data on iOS and Wasm
+
+* Report Details
+    * ID: BUG-20260420-002
+    * Status: Resolved
+    * Component: StratoHAL
+    * Severity: high
+    * Priority: high
+    * Reproducibility: always
+    * First Found In: 86a91e17752978090ddc442743d67312d54fb7303
+    * Fixed In: f67d849e208413660f27201c6697ed261ca46c51
+    * Reported Date: 05:30 20 April 2026
+    * Fixed Date: 06:15 20 April 2026
+    * Detection: found in testing of BUG-20260420-001
+    * Root Cause Type: wrong implementation of hal_open_rfile()
+    * OS: iOS, Wasm
+    * CPU: All
+
+### Report
+
+On the Wasm version, save --> load will cause a bad behavior.
+
+### Analysis
+
+In `hal_open_rfile()` in `stdfile.c`,
+the treatment of save files was wrong.
+
+### Patch
+
+`hal_open_rfile()` has been fixed.
+
+Files modified:
+- external/PlayfieldEngine/external/StratoHAL/src/stdfile.c
+
+### Commits
+
+- f67d849e208413660f27201c6697ed261ca46c51
