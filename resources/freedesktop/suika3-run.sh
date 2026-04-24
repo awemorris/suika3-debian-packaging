@@ -23,8 +23,8 @@ else
 fi
 
 if [ -z "$RUN_OK" ]; then
-    DEFAULT_FILE="$HOME";
-    for base in /usr /usr/local /usr/pkg /opt; do
+    DEFAULT_FILE="";
+    for base in /usr /usr/local /usr/pkg /opt /app; do
         for sub in "share/suika3/game" \
                    "share/examples/suika3/game" \
                    "share/docs/suika3/examples/game"; do
@@ -45,10 +45,9 @@ if [ -z "$RUN_OK" ]; then
                   --file-filter="All files | *");
     if [ -z "$FILE" ]; then
         if [ ! -z "$DEFAULT_FILE" ]; then
-			RES=$(zenity --question \
-                         --title "Suika3 Engine" \
-				         --text "Do you want to run the sample game?");
-            if $RES; then
+            if zenity --question \
+                      --title "Suika3 Engine" \
+                      --text "Do you want to run the sample game?"; then
                 FILE="$DEFAULT_FILE";
             else
                 exit 1;
