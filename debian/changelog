@@ -2,8 +2,11 @@ suika3 (26.04.13-1) UNRELEASED; urgency=medium
 
   * Update rules
   * New upstream version 26.04.13
+  * Add CC0-1.0 to copyright
+  * Add CC0-1.0 full text to copyright
+  * New upstream version 26.04.16
 
- -- Awe Morris <awe@noctvm.io>  Thu, 23 Apr 2026 03:44:25 +0900
+ -- Awe Morris <awe@noctvm.io>  Fri, 24 Apr 2026 14:22:19 +0900
 
 suika3 (26.04.9-3) unstable; urgency=medium
 
