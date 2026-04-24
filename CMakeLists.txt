@@ -155,7 +155,7 @@ option(SUIKA_ENABLE_MAIN2 "Enable main2() hook" OFF)
 
 #
 # [SUIKA_ENABLE_CONSOLE]
-#  - Use console for debug output on Windows.
+#  - Use console for debug output..
 #
 option(SUIKA_ENABLE_CONSOLE "Enable console debug output" OFF)
 
@@ -1101,7 +1101,7 @@ if(SUIKA_ENABLE_INSTALL)
   #
 
   # Install ZLIB-licensed contents.
-  if(SUIKA_ENABLE_DIST)
+  if(SUIKA_ENABLE_DIST AND NOT SUIKA_ENABLE_FLATPAK)
     # Exclude the font when packaging.
     # (A symlink to a system font should be created by packaging process.)
     install(

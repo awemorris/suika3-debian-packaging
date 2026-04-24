@@ -77,6 +77,25 @@ Please refer to [Getting Started](docs/mkdocs-en/docs/getting-started.md).
 
 [https://github.com/awemorris/suika3/releases/latest/download/Suika3-full.zip](https://github.com/awemorris/suika3/releases/latest/download/Suika3-full.zip)
 
+### Package Managers
+
+Linux (Flatpak):
+```
+wget https://github.com/awemorris/suika3/releases/latest/download/Suika3-$(uname -m).flatpak
+flatpak install --user Suika3-$(uname -m).flatpak
+```
+
+macOS (Homebrew):
+```
+brew tap awemorris/suika3
+brew install suika3
+```
+
+FreeBSD Ports (latest):
+```
+pkg install suika3
+```
+
 ### Source Build
 
 Please refer to [build.md](docs/mkdocs-en/docs/build.md) for platform-specific instructions.
@@ -97,25 +116,6 @@ cd ../game
 suika3
 ```
 
-### Package Managers
-
-Homebrew:
-```
-brew tap awemorris/suika3
-brew install suika3
-```
-
-Flatpak:
-```
-wget https://github.com/awemorris/suika3/releases/latest/download/Suika3.flatpak
-flatpak install --user Suika3.flatpak
-```
-
-FreeBSD Ports:
-```
-cd /usr/ports/games/suika3 && make install clean
-```
-
 ---
 
 ## VS Code Syntax Highlighting
@@ -123,7 +123,7 @@ cd /usr/ports/games/suika3 && make install clean
 There is an awesome VS Code extension by `@lalalll-lalalll` to support
 syntax highlighting for Suika3.
 
-Check it out: [NovelML-Highlighter](https://github.com/lalalll-lalalll/NovelML-Highlighter)
+Check it out: [NovelML-Helper](https://github.com/lalalll-lalalll/NovelML-Helper)
 
 To install this extension, visit the repository and download the .vsix
 file from the
@@ -156,26 +156,44 @@ Now you have a beautiful development environment!
 
 Open the extracted folder by `Visual Studio Code`.
 
-**Click `Terminal --> Run Build Task` (or press Ctrl-Shift-B):**
-
-<img src="https://raw.githubusercontent.com/awemorris/suika3/refs/heads/main/docs/img/vscode-1.webp" alt="VSCode 1" width="640" hspace="20">
-
-**Suika3 will be executed:**
+- Click the command bar, `Run Task --> Suika3: Run` (or just press `Ctrl-Shift-B`)
+- Suika3 will launch immediately!
+- Any script errors will appear in the `PROBLEMS` tab.
+- You can click an error to jump directly to the corresponding line in the source code.
 
 <img src="https://raw.githubusercontent.com/awemorris/suika3/refs/heads/main/docs/img/vscode-2.webp" alt="VSCode 2" width="640" hspace="20">
-
-**Errors will be shown in PROBLEMS:**
-
 <img src="https://raw.githubusercontent.com/awemorris/suika3/refs/heads/main/docs/img/vscode-3.webp" alt="VSCode 3" width="640" hspace="20">
 
-### Android Execution
+### iOS and Android Execution
 
-Clicking the "Suika3: Build Android APK" task will automatically
-generate an APK file and install it on your Android device. There is
-no need to install the JDK or Android SDK manually, as they will be
-downloaded automatically in the build process!
+Ever dreamed of becoming an iOS/Android developer in just a minute?
+With Suika3, it's that simple.
 
-A similar workflow is planned for iOS as well. (Mac is required)
+- One-Click:
+    - By selecting the `Suika3: Build iOS IPA` or `Suika3: Build Android APK`
+      task, Suika3 will automatically build the app and install it
+      onto your USB-connected smartphone.
+- For Android:
+    - No manual setup required
+    - No Android Studio required
+    - No paid license required
+    - JDK and Android SDK will be downloaded automatically during the build process
+- For iOS:
+    - Xcode 15+ required
+    - No paid license required for testing on iPhone simulators
+    - `Apple Developer Program` required for testing on iPhone/iPad ($99/year)
+
+We truly believe Suika3 is one of the most streamlined tools in the
+world for creating and publishing iPhone, iPad, and Android apps to
+the stores!
+
+Even if you aren't ready to publish just yet, imagine the look on your
+friends' faces when they see your game running smoothly on an iPhone.
+You'll be the star of the day.
+
+And if you're looking for a publisher to back your project, having a
+playable, high-quality mobile demo is your ultimate weapon. It speaks
+louder than any pitch deck ever could!
 
 ---
 
@@ -287,18 +305,14 @@ Suika3 is engineered with modern techniques, and delivers:
 
 ## Kanban (Status)
 
-The current version is `26.04.x`.**
+**The current version is `26.04.x`:**
 
-We are in the `Quality Stabilization Period` (April 1 - June 30, 2026) for
-the planned release `Suika3 26.07 LTS` (scheduled on July 1 2026).
-
-While the quality is improving day by day, our `System Testing` for
-the first release has only just begun, so many bugs still need to be
-fixed. However, we have secured a three-month system testing period,
-and we expect that major bugs will be resolved by the time of release.
-
-A detailed list of known issues can be found in [BUGS.md](BUGS.md).
-See [Quality Assurance](#quality-assurance) for the details.
+- Quality is improving daily, and `26.04.15` is now considered stable.
+- We are currently in the `Quality Stabilization Period` (April 1 - June 30, 2026)
+  in preparation for the upcoming `Suika3 26.07 LTS` release (scheduled for July 1, 2026).
+- While some minor bugs may remain, they will be fully resolved by the LTS release.
+- A detailed list of all issues can be found in [BUGS.md](BUGS.md).
+- See [Quality Assurance](#quality-assurance) for more details.
 
 **Our current status is:**
 
@@ -318,7 +332,6 @@ See [Quality Assurance](#quality-assurance) for the details.
 - Goal: `Suika3 26.07 LTS` Public Release (July 1, 2026)
 
 **Remaining Tasks:**
-- Website Update
 - Document: `SRS: System Requirement Specification`
 - Document: `SDS: System Design Specification`
 
