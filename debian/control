@@ -20,6 +20,7 @@ Build-Depends: debhelper-compat (= 13),
          mesa-common-dev (>= 22),
          libbrotli-dev (>= 1)
 Standards-Version: 4.7.3
+Priority: Optional
 Homepage: https://github.com/awemorris/suika3
 Vcs-Browser: https://github.com/awemorris/suika3
 Vcs-Git: https://salsa.debian.org/awemorris/suika3.git
